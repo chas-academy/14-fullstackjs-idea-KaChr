@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').load();
 
+const bodyParser = require('body-parser');
 
 // Import MongoDB url from .env
 const mongoDB = process.env.MONGO_URL;
@@ -14,6 +15,10 @@ mongoose.connect(mongoDB, { useNewUrlParser: true })
 
 // Create the server
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 
 app.use(express.static(path.resolve('../client/build')));
 
@@ -29,13 +34,26 @@ app.use(function(req, res, next) {
 
 app.use(cors());
 
+const passport = require('passport');
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport Config
+require('./config/passport')(passport);
+
+// Import routes
+const auth = require('./controllers/AuthController');
+app.use('/auth', auth);
+const users = require('./controllers/AuthController');
+app.use('/users', users);
+/*
 // Import index routes
 const index = require('./routes/index');
 app.use('/', index);
 app.use('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
 });
-
+*/
 // Import port from .env
 const port = process.env.PORT || 8888;
 
