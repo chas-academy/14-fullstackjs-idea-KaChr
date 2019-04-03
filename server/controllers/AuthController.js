@@ -4,10 +4,18 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
+const registerInputValidation = require('../validation/register');
 const User = require('../models/Users');
 
 // Create new user: /auth/register
 router.post('/register', (req, res) => {
+
+  // checks that all values from req.body that goes thrugh this router are valid
+  const { error, isValid } = registerInputValidation(req.body);
+
+  if(!isValid) {
+    return res.status(400).json(error);
+  }
   // Hash the password
   var bcryptPassword = bcrypt.hashSync(req.body.password, 8);
   
