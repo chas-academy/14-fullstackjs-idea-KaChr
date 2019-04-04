@@ -44,7 +44,7 @@ require('./config/passport')(passport);
 // Import routes
 const auth = require('./controllers/AuthController');
 app.use('/auth', auth);
-const users = require('./controllers/AuthController');
+const users = require('./controllers/UserController');
 app.use('/users', users);
 /*
 // Import index routes
