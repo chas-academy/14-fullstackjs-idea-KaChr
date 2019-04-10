@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import { Register } from './components';
+
 class App extends Component {
 
   componentDidMount() {
@@ -18,6 +20,7 @@ class App extends Component {
     return (
       <div className="App">
           <h1>Hello Karin</h1>
+          <Register />
       </div>
     );
   }

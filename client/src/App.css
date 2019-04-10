@@ -1,12 +1,42 @@
+/* For mobile phones: */
 .App {
+  width: 100%;
+  min-height: 100vh;
   text-align: center;
+  background-color: rgba(85, 107, 47);
+  padding: 2em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+#register {
+  margin-top: 2rem;
+}
+
+#register--form {
+  font-weight: bold;
+  text-align: left;
+}
+
+#register--form--content {
+  margin: 20px;
+}
+
+#register--form--content--button {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+/* For desktop: */
+@media only screen and (min-width: 768px) {
+  .App{
+    background-color: rgba(85, 107, 47, 0.9);
   }
-  to {
-    transform: rotate(360deg);
+
+  #register--form {
+  background-color: rgba(62, 78, 33, 0.6);
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  border-radius: 1rem;
+  width: 700px ;
+  margin: 0 auto;
+  padding: 20px;
   }
 }
