@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
+//Import from redux
+import store from './store';
+//Provides application with store
+import { Provider } from 'react-redux';
+
+// Import components
+import { Register, Login } from './components';
+//Import CSS
 import './App.css';
 
-import { Register } from './components';
-
 class App extends Component {
-
-  componentDidMount() {
-    console.log('HELLO');
-
-    fetch('http://localhost:8080', {
-      method: 'GET'
-    }).then(res => res.json()).then(data => console.log(data));
-    
-
-  }
-  
-
   render() {
     return (
-      <div className="App">
-          <h1>Hello Karin</h1>
-          <Register />
-      </div>
+      <Provider store={ store }>
+        <div className="App">
+            <h1>Hello Karin</h1>
+            <Login />
+            <Register />
+        </div>
+      </Provider>
     );
   }
 }
