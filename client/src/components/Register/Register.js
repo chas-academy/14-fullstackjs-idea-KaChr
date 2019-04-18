@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+//Import withRouter
+import { withRouter } from 'react-router-dom';
 // To add addtitonal classnames
 import classnames from 'classnames';
 //Connecting redux to component
@@ -44,7 +46,7 @@ export class Register extends Component {
       phone: this.state.phone
     };
 
-    this.props.userRegister(newUser);
+    this.props.userRegister(newUser, this.props.history);
   }
 
   render() {
@@ -105,4 +107,4 @@ const mapStateToProps = (state) => ({
 });
 
 // Connects the variable with the action (connecting redux to the component)
-export default connect(mapStateToProps, { userRegister })(Register);
+export default connect(mapStateToProps, { userRegister })(withRouter(Register));
