@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import store from './store';
 //Provides application with store
 import { Provider } from 'react-redux';
+//Import router
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // Import components
 import { Register, Login } from './components';
@@ -13,11 +15,12 @@ class App extends Component {
   render() {
     return (
       <Provider store={ store }>
+        <Router>
         <div className="App">
-            <h1>Hello Karin</h1>
-            <Login />
-            <Register />
+            <Route exact path="/login" component={ Login } />
+            <Route exact path="/register" component={ Register } />
         </div>
+        </Router>
       </Provider>
     );
   }
