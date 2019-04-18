@@ -37,7 +37,9 @@ router.post('/register', (req, res) => {
           admin: req.body.admin,
         },
         (err, user) => {
-          if (err) return res.status(500).send('There was a problem while adding this user.')
+          if (err) {
+          return res.status(500).send('There was a problem while adding this user.');
+          }
           // Create a token
           var jwtToken = jwt.sign({ id: user._id }, process.env.SECRET, {
             expiresIn: 86400 // 24 hours before it expires
