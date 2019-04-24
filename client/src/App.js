@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // Import components
-import { Register, Login } from './components';
+import { Home, Register, Login } from './components';
 //Import CSS
 import './App.css';
 
@@ -17,6 +17,7 @@ class App extends Component {
       <Provider store={ store }>
         <Router>
         <div className="App">
+            <Route exact path="/" component={ Home } />
             <Route exact path="/login" component={ Login } />
             <Route exact path="/register" component={ Register } />
         </div>

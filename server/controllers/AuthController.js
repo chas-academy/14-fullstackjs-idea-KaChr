@@ -24,7 +24,8 @@ router.post('/register', (req, res) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if(user) {
-        return res.status(400).json({ email: 'This email is already taken.' });
+        error.email = 'This email is already taken.';
+        return res.status(400).json(error);
       } else {
         User.create({
           first_name: req.body.first_name,
@@ -62,7 +63,10 @@ router.post('/login', (req, res) => {
   // Find user
   User.findOne({ email: req.body.email })
     .then(user => {
-      if(!user) return res.status(404).send('Could not find user');
+      if(!user) {
+        error.email = 'Could not find user.';
+        return res.status(404).json(error);
+      }
 
       // Make sure the passwords are the same
       bcrypt.compare(req.body.password, user.password)
@@ -77,7 +81,8 @@ router.post('/login', (req, res) => {
               token: 'Bearer ' + jwt.sign(jwtPayload, process.env.SECRET, { expiresIn: 86400 }) // 24 hours before it expires
             });
           } else {
-            return res.status(401).json('Invalid password.');
+            error.password = 'Invalid password.';
+            return res.status(401).json(error);
           }
         });
     });
