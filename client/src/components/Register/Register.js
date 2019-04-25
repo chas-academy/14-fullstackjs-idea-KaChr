@@ -23,6 +23,12 @@ export class Register extends Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.auth.isAuth) {
+      this.props.history.push('/');
+    }
+  }
+
   UNSAFE_componentWillReceiveProps = (nextProps) => {
     if (nextProps.error) {
       this.setState({ error: nextProps.error });
