@@ -4,7 +4,7 @@ import store from './store';
 //Provides application with store
 import { Provider } from 'react-redux';
 //Import router
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //Token decode
 import jwt_decode from 'jwt-decode';
 //Token for header
@@ -12,6 +12,8 @@ import authToken from './utils/authToken';
 //Sets user that is logged in
 import { currentUser, userLogout } from './actions/authActions';
 
+//Import route protection
+import PrivateRoute from './helpers/privateRoute';
 // Import components
 import { Header, Home, Register, Login } from './components';
 //Import CSS
@@ -43,7 +45,9 @@ export class App extends Component {
         <Router>
         <div className="App">
             <Header />
-            <Route exact path="/" component={ Home } />
+            <Switch>
+              <PrivateRoute exact path="/" component={ Home } />
+            </Switch>
             <Route exact path="/login" component={ Login } />
             <Route exact path="/register" component={ Register } />
         </div>
