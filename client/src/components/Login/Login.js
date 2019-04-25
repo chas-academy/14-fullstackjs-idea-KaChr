@@ -16,6 +16,12 @@ export class Login extends Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.auth.isAuth) {
+      this.props.history.push('/');
+    }
+  }
+
   UNSAFE_componentWillReceiveProps = (nextProps) => {
     if (nextProps.auth.isAuth) {
       this.props.history.push('/');

@@ -10,10 +10,10 @@ import jwt_decode from 'jwt-decode';
 //Token for header
 import authToken from './utils/authToken';
 //Sets user that is logged in
-import { currentUser } from './actions/authActions';
+import { currentUser, userLogout } from './actions/authActions';
 
 // Import components
-import { Home, Register, Login } from './components';
+import { Header, Home, Register, Login } from './components';
 //Import CSS
 import './App.css';
 
@@ -25,6 +25,15 @@ if (localStorage.jwtToken) {
   const jwtDecoded = jwt_decode(localStorage.jwtToken);
   //Set the current user and isAuth
   store.dispatch(currentUser(jwtDecoded));
+
+  //Check if token has expired
+  const presentTime = Date.now() / 1000;
+  if (jwtDecoded.exp < presentTime) {
+    //Logout user if token has expired
+    store.dispatch(userLogout());
+    //Redirect to login after logout
+    window.location.href = '/login';
+  }
 }
 
 export class App extends Component {
@@ -33,6 +42,7 @@ export class App extends Component {
       <Provider store={ store }>
         <Router>
         <div className="App">
+            <Header />
             <Route exact path="/" component={ Home } />
             <Route exact path="/login" component={ Login } />
             <Route exact path="/register" component={ Register } />
