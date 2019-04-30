@@ -15,7 +15,7 @@ import { currentUser, userLogout } from './actions/authActions';
 //Import route protection
 import PrivateRoute from './helpers/privateRoute';
 // Import components
-import { Header, Home, Register, Login } from './components';
+import { Header, Home, Register, Login, MyPage } from './components';
 //Import CSS
 import './App.css';
 
@@ -47,6 +47,7 @@ export class App extends Component {
             <Header />
             <Switch>
               <PrivateRoute exact path="/" component={ Home } />
+              <PrivateRoute exact path="/my-page" component={ MyPage } />
             </Switch>
             <Route exact path="/login" component={ Login } />
             <Route exact path="/register" component={ Register } />
