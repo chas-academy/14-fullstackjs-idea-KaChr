@@ -18,6 +18,9 @@ class Header extends Component {
     //Links that show when logged in
     const linkAuth = (
       <div>
+        <Link className="navbar-brand" to="/my-page">
+          My page
+        </Link>
         <Link className="navbar-brand" to="/#" onClick={this.onLogout}>
           Logout
         </Link>
