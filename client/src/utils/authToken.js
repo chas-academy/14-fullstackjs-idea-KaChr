@@ -1,13 +1,13 @@
-//Promise-based HTTP client
+// Promise-based HTTP client
 import axios from 'axios';
 
-//Set auth header
+// Set auth header
 const authToken = token => {
   if (token) {
-    //Set auth header to every request
+    // Set auth header to every request
     axios.defaults.headers.common['Authorization'] = token;
   } else {
-    //Remove auth header
+    // Remove auth header
     delete axios.defaults.headers.common['Authorization'];
   }
 };

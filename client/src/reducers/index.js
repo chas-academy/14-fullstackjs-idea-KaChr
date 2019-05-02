@@ -1,10 +1,10 @@
-//Import from redux
+// Import from redux
 import { combineReducers } from 'redux';
-//Import reducers
+// Import reducers
 import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 
-//Combine reducers
+// Combine reducers
 export default combineReducers({
   auth: authReducer,
   error: errorReducer
