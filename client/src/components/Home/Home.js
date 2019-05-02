@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-export class Home extends Component {  
+export class Home extends Component {
   render() {
     return (
       <div>
         <h2>Hemma!</h2>
       </div>
-    )
+    );
   }
 }
 
