@@ -18,7 +18,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
 
 // Type-checking
 PrivateRoute.propTypes = {
-  component: PropTypes.element.isRequired,
+  component: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
