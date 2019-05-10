@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema ({
+const UserSchema = new Schema({
   first_name: {
     type: String,
     required: true
@@ -33,6 +33,20 @@ const UserSchema = new Schema ({
   admin: {
     type: Boolean,
     default: false
+  }
+});
+
+/**
+ *  This will remove the password property
+ *  from the user response object when and only
+ *  when the response format is JSON
+ */
+
+UserSchema.set('toJSON', {
+  transform: function(doc, user, opt) {
+    delete user['password'];
+
+    return user;
   }
 });
 
