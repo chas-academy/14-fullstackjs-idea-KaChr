@@ -27,16 +27,16 @@
 
 /* For desktop: */
 @media only screen and (min-width: 768px) {
-  .App{
+  .App {
     background-color: rgba(85, 107, 47, 0.9);
   }
 
   #register--form {
-  background-color: rgba(245, 249, 250, 0.7);
-  border: 2px solid rgba(0, 0, 0, 0.4);
-  border-radius: 1rem;
-  width: 700px ;
-  margin: 0 auto;
-  padding: 20px;
+    background-color: rgba(245, 249, 250, 0.7);
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    border-radius: 1rem;
+    width: 700px;
+    margin: 0 auto;
+    padding: 20px;
   }
 }
