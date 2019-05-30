@@ -16,8 +16,6 @@ router.post('/register', (req, res) => {
   if (!isValid) {
     return res.status(400).json(error);
   }
-  // Hash the password
-  var bcryptPassword = bcrypt.hashSync(req.body.password, 8);
 
   // Check if user exists, create if there is none
   User.findOne({ email: req.body.email }).then(user => {
@@ -25,26 +23,32 @@ router.post('/register', (req, res) => {
       error.email = 'This email is already taken.';
       return res.status(400).json(error);
     } else {
-      const newUser = req.body;
+      // Hash the password
+      const bcryptPassword = bcrypt.hashSync(req.body.password, 8);
 
-      User.create(
-        {
-          newUser
-        },
-        (err, user) => {
-          if (err) {
-            return res
-              .status(500)
-              .send('There was a problem while adding this user.');
-          }
-          // Create a token
-          const jwtToken = jwt.sign({ id: user._id }, process.env.SECRET, {
-            expiresIn: 86400 // 24 hours before it expires
+      const newUser = {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        password: bcryptPassword,
+        adress: req.body.adress,
+        zipcode: req.body.zipcode,
+        phone: req.body.phone
+      };
+
+      User.create(newUser, (err, user) => {
+        if (err) {
+          return res.status(500).json({
+            message: 'There was a problem while adding this user.'
           });
-
-          res.status(200).send({ authenticate: true, token: jwtToken });
         }
-      );
+        // Create a token
+        const jwtToken = jwt.sign({ id: user._id }, process.env.SECRET, {
+          expiresIn: 86400 // 24 hours before it expires
+        });
+
+        res.status(200).send({ authenticate: true, token: jwtToken });
+      });
     }
   });
 });

@@ -10,8 +10,9 @@ const bodyParser = require('body-parser');
 const mongoDB = process.env.MONGO_URL;
 
 // Connect to MongoDB
-mongoose.connect(mongoDB, { useNewUrlParser: true })
-.then(() => console.log('MongoDB connected'));
+mongoose
+  .connect(mongoDB, { useNewUrlParser: true })
+  .then(() => console.log('MongoDB connected'));
 
 // Create the server
 const app = express();
@@ -19,14 +20,13 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 app.use(express.static(path.resolve('../client/build')));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
     'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization' 
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
   res.header('Access-Control-Allow-Headers', 'x-access-token');
   res.header('Access-Control-Allow-Methods', 'POST, PUT, GET, OPTIONS, DELETE');

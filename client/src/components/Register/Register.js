@@ -176,10 +176,30 @@ export class Register extends Component {
               <div className='invalid-feedback'>{error.phone}</div>
             )}
           </div>
+
           <div className='form-group' id='register--form--content--button'>
             <button type='submit' className='btn btn-primary btn-lg'>
               Submit
             </button>
+            {error.message && (
+              <div className='error-message'>
+                {error.message}, please contact the site administrator if the
+                error persists
+                <button
+                  type='button'
+                  className='btn btn-secondary btn-sm'
+                  onClick={() => {
+                    this.setState({
+                      error: {
+                        message: null
+                      }
+                    });
+                  }}
+                >
+                  Click here to remove this message X
+                </button>
+              </div>
+            )}
           </div>
         </form>
       </div>
