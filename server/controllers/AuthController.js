@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
+const updatePasswordInputValidation = require('../validation/password');
 const registerInputValidation = require('../validation/register');
 const loginInputValidation = require('../validation/login');
 const User = require('../models/Users');
@@ -88,6 +89,33 @@ router.post('/login', (req, res) => {
       }
     });
   });
+});
+
+router.post('/update-password', (req, res) => {
+  // checks that all values from req.body that goes thrugh this router are valid
+  const { error, isValid } = updatePasswordInputValidation(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(error);
+  }
+
+  // Check if user exists, create if there is none
+  User.findOne({ email: req.body.email }).then(user => {
+    if (user) {
+      error.email = 'A user with that email could not be found.';
+      return res.status(400).json(error);
+    } else {
+      // Hash the password
+      const bcryptPassword = bcrypt.hashSync(req.body.password, 8);
+
+      if (!bcryptPassword === user.password) {
+        // returnera fel
+        error.password = "The current password is incorrect";
+        return res.status(400).json(error);
+      }
+
+      // Update the user now somehow...
+
 });
 
 // Show current user: /auth/me

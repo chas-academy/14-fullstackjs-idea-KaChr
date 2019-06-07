@@ -21,7 +21,8 @@ import {
   Register,
   Login,
   MyPage,
-  UserDetail
+  UserDetail,
+  UserEdit
 } from './components';
 // Import CSS
 import './App.css';
@@ -56,6 +57,7 @@ export class App extends Component {
               <PrivateRoute exact path='/' component={Home} />
               <PrivateRoute exact path='/my-page' component={MyPage} />
               <PrivateRoute exact path='/users/:id' component={UserDetail} />
+              <PrivateRoute exact path='/users/edit/:id' component={UserEdit} />
             </Switch>
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
