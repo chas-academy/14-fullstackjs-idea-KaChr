@@ -28,6 +28,11 @@ export class MyPage extends Component {
                     User details
                   </Link>
                 </li>
+                <li className='nav-item'>
+                  <Link className='nav-link' to={`/users/edit/${user.id}`}>
+                    User edit
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>

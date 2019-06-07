@@ -8,6 +8,7 @@ const initState = {
 export default (state = initState, action) => {
   switch (action.type) {
     case GET_USER:
+      console.log('REDUCER', action.payload);
       return {
         ...state,
         user: action.payload
