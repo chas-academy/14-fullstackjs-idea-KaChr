@@ -22,7 +22,9 @@ import {
   Login,
   MyPage,
   UserDetail,
-  UserEdit
+  UserEdit,
+  ChangePassword
+  // Message
 } from './components';
 // Import CSS
 import './App.css';
@@ -53,11 +55,17 @@ export class App extends Component {
         <Router>
           <div className='App'>
             <Header />
+            {/* <Message /> */}
             <Switch>
               <PrivateRoute exact path='/' component={Home} />
               <PrivateRoute exact path='/my-page' component={MyPage} />
               <PrivateRoute exact path='/users/:id' component={UserDetail} />
               <PrivateRoute exact path='/users/edit/:id' component={UserEdit} />
+              <PrivateRoute
+                exact
+                path='/auth/update-password'
+                component={ChangePassword}
+              />
             </Switch>
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />

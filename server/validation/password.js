@@ -51,29 +51,22 @@ module.exports = function updatePasswordInputValidation(data) {
     error.password_new_1 =
       'This field must have a length between 8 and 30 characters.';
   }
+  // check if the new and current password fields are equal
+  if (Validator.equals(data.password, data.password_new_1)) {
+    error.password_new_1 = 'The new password cannot equal the current password';
+  }
   // check if password is empty
   if (Validator.isEmpty(data.password_new_1)) {
     error.password_new_1 = 'This field is required.';
   }
 
-  //  // check if password contain lower and uppercase letters
-  //  if (
-  //   Validator.isLowercase(data.password_new_2) ||
-  //   Validator.isUppercase(data.password_new_2)
-  // ) {
-  //   error.password_new_2 = 'Password must contain upper and lowercase letters.';
-  // }
-  // // check if password has valid length
-  // if (!Validator.isLength(data.password_new_2, { min: 8, max: 30 })) {
-  //   error.password_new_2 =
-  //     'This field must have a length between 8 and 30 characters.';
-  // }
   // check if password is empty
   if (Validator.isEmpty(data.password_new_2)) {
     error.password_new_2 = 'This field is required.';
   }
 
-  if (!validator.equals(password_new_1, password_new_2)) {
+  // check if the new password fields are equal
+  if (!Validator.equals(data.password_new_1, data.password_new_2)) {
     error.password_new_2 = 'The new passwords does not match';
   }
 

@@ -33,6 +33,11 @@ export class MyPage extends Component {
                     User edit
                   </Link>
                 </li>
+                <li className='nav-item'>
+                  <Link className='nav-link' to={`/auth/update-password`}>
+                    Update password
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>

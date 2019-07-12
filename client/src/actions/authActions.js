@@ -3,7 +3,7 @@ import axios from 'axios';
 // Token decode
 import jwt_decode from 'jwt-decode';
 // import action type variabel
-import { GET_ERROR, SET_CURRENT_USER } from './types';
+import { GET_ERROR, SET_CURRENT_USER, UPDATE_PASSWORD } from './types';
 // Token for header
 import authToken from '../utils/authToken';
 
@@ -51,6 +51,29 @@ export const currentUser = jwtDecoded => {
     type: SET_CURRENT_USER,
     payload: jwtDecoded
   };
+};
+
+// Change user password
+export const updatePassword = (userData, history) => async dispatch => {
+  try {
+    const res = await axios.post(
+      `http://localhost:8080/auth/update-password`,
+      userData
+    );
+
+    dispatch({
+      type: UPDATE_PASSWORD,
+      payload: res.data
+    });
+    history.push('/');
+    console.log('message', res.data);
+  } catch (err) {
+    dispatch({
+      type: GET_ERROR,
+      payload: err.response.data
+    });
+    console.log('errors', err.response.data);
+  }
 };
 
 // Logout (remove token)
