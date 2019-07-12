@@ -20,25 +20,6 @@ export const userDetail = id => async dispatch => {
   }
 };
 
-// use this?
-// Check if token exists
-// if (localStorage.jwtToken) {
-//   // Set token to auth header
-//   authToken(localStorage.jwtToken);
-//   // Token decodeing to get the user data
-//   const jwtDecoded = jwt_decode(localStorage.jwtToken);
-//   // Set the current user and isAuth
-//   store.dispatch(currentUser(jwtDecoded));
-
-//   // Check if token has expired
-//   const presentTime = Date.now() / 1000;
-//   if (jwtDecoded.exp < presentTime) {
-//     // Logout user if token has expired
-//     store.dispatch(userLogout());
-//     // Redirect to login after logout
-//     window.location.href = '/login';
-//   }
-// }
 // Edit user details
 export const userEdit = (id, dataUser, history) => dispatch => {
   axios
