@@ -11,6 +11,10 @@ import jwt_decode from 'jwt-decode';
 import authToken from './utils/authToken';
 // Sets user that is logged in
 import { currentUser, userLogout } from './actions/authActions';
+// Container for notifications
+import { ToastContainer } from 'react-toastify';
+// Notification CSS
+import 'react-toastify/dist/ReactToastify.css';
 
 // Import route protection
 import PrivateRoute from './helpers/privateRoute';
@@ -24,7 +28,6 @@ import {
   UserDetail,
   UserEdit,
   ChangePassword
-  // Message
 } from './components';
 // Import CSS
 import './App.css';
@@ -55,7 +58,7 @@ export class App extends Component {
         <Router>
           <div className='App'>
             <Header />
-            {/* <Message /> */}
+            <ToastContainer />
             <Switch>
               <PrivateRoute exact path='/' component={Home} />
               <PrivateRoute exact path='/my-page' component={MyPage} />

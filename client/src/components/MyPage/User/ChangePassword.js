@@ -9,7 +9,7 @@ import { PropTypes } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 // import actions
 import { updatePassword } from '../../../actions/authActions';
-// import { successMessage } from '../../../actions/messageAtions';
+// To check if props is empty
 const isEmpty = require('lodash/isEmpty');
 
 class ChangePassword extends Component {
@@ -20,8 +20,7 @@ class ChangePassword extends Component {
       password: '',
       password_new_1: '',
       password_new_2: '',
-      error: {},
-      user: {}
+      error: {}
     };
   }
 
@@ -29,11 +28,9 @@ class ChangePassword extends Component {
     if (!isEmpty(nextProps.error)) {
       this.setState({ error: nextProps.error });
     }
-    if (!isEmpty(nextProps.user)) {
-      this.setState({ user: nextProps.user });
-    }
   };
 
+  // Get the form values and put them in as state
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -41,9 +38,9 @@ class ChangePassword extends Component {
   onSubmit = e => {
     e.preventDefault();
 
+    // If the new passwords are equal
     if (this.state.password_new_1 === this.state.password_new_2) {
-      // TODO DOKUMENTERA
-
+      // Create a object that contains form values
       const userData = {
         email: this.state.email,
         password: this.state.password,
@@ -51,6 +48,7 @@ class ChangePassword extends Component {
         password_new_2: this.state.password_new_2
       };
 
+      // Send the formvalues and history to the action to try to update password
       this.props.updatePassword(userData, this.props.history);
     }
   };
@@ -59,7 +57,7 @@ class ChangePassword extends Component {
     const { error } = this.state;
     return (
       <div>
-        <div id='edit-user'>
+        <div id='change-password'>
           <h2>Change password:</h2>
           <form id='register--form' onSubmit={e => this.onSubmit(e)}>
             <div className='form-group' id='register--form--content'>
@@ -140,20 +138,19 @@ class ChangePassword extends Component {
 
 // Type-checking
 ChangePassword.propTypes = {
-  error: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  error: PropTypes.any.isRequired,
   updatePassword: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired
-  // successMessage: PropTypes.func.isRequired
 };
 
+// Making props out of states to use in component
 const mapStateToProps = state => ({
-  error: state.error,
-  user: state.user.user
+  error: state.error
 });
 
+// Connects the variable with the action (connecting redux to the component)
 export default connect(
   mapStateToProps,
   { updatePassword }

@@ -7,7 +7,6 @@ const isEmpty = require('lodash/isEmpty');
 const initState = {
   isAuth: false,
   user: {}
-  // isUpdated: true
 };
 
 // Export state accordingly to how its manipulated with the help of action type, if no change return initState.
@@ -20,11 +19,9 @@ export default (state = initState, action) => {
         user: action.payload
       };
     case UPDATE_PASSWORD:
-      console.log('REDUCER', action.payload);
       return {
         ...state,
         user: action.payload
-        // isUpdated: action.payload
       };
     default:
       return state;

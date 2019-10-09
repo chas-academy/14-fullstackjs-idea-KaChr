@@ -6,6 +6,8 @@ import jwt_decode from 'jwt-decode';
 import { GET_ERROR, SET_CURRENT_USER, UPDATE_PASSWORD } from './types';
 // Token for header
 import authToken from '../utils/authToken';
+// React dependency for notifications
+import { toast } from 'react-toastify';
 
 // Register fetch (from backend)
 export const userRegister = (dataUser, history) => dispatch => {
@@ -65,14 +67,18 @@ export const updatePassword = (userData, history) => async dispatch => {
       type: UPDATE_PASSWORD,
       payload: res.data
     });
+
+    // Redirect to home
     history.push('/');
-    console.log('message', res.data);
+    // Show success message
+    toast.success('The password was successfully updated!', {
+      position: 'top-center'
+    });
   } catch (err) {
     dispatch({
       type: GET_ERROR,
       payload: err.response.data
     });
-    console.log('errors', err.response.data);
   }
 };
 

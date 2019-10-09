@@ -5,9 +5,11 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const ObjectId = require('mongodb').ObjectId;
 
+// Form validation
 const updatePasswordInputValidation = require('../validation/password');
 const registerInputValidation = require('../validation/register');
 const loginInputValidation = require('../validation/login');
+// User model schema
 const User = require('../models/Users');
 
 // Create new user: /auth/register
@@ -93,26 +95,24 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/update-password', (req, res) => {
-  // // checks that all values from req.body that goes thrugh this router are valid
+  // Checks that all values from req.body that goes thrugh this router are valid
   const { error, isValid } = updatePasswordInputValidation(req.body);
 
   if (!isValid) {
     return res.status(400).json(error);
   }
 
-  // Check if user exists, create if there is none
+  // Check if user exists, if so update password
   User.findOne({ email: req.body.email })
     .then(user => {
       if (!user) {
-        console.log('no user');
         error.email = 'A user with that email could not be found.';
-        return res.status(400).send(error.email);
+        return res.status(400).send(error);
       } else {
+        // Check if the db password matches the enterd one
         bcrypt.compare(req.body.password, user.password).then(isMatch => {
           if (isMatch) {
             // Hash the password
-            console.log('they match');
-
             const bcryptNewPassword = bcrypt.hashSync(
               req.body.password_new_1,
               8
@@ -124,35 +124,23 @@ router.post('/update-password', (req, res) => {
               { $set: { password: bcryptNewPassword } }
             )
               .then(user => {
-                console.log('password updated');
-
                 return res
                   .status(200)
                   .json({ message: 'The password has been updated' });
               })
               .catch(error => {
-                console.log('wrong no update');
-
                 error.password =
                   'Something went wrong when trying to update the user password';
-                return res.status(400).json(error.password);
+                return res.status(400).json(error);
               });
           } else {
-            // returnera fel
-            console.log('current password nono');
             error.password = 'The current password is incorrect';
-            return res.status(400).json(error.password);
+            return res.status(400).json(error);
           }
         });
-        // .catch(error => {
-        //   console.log('no user found');
-        //   error.password = 'Could not find user';
-        //   return res.status(400).json(error.password);
-        // });
       }
     })
     .catch(error => {
-      console.log('no workie');
       return res.status(404).json({
         message: 'There was a problem while trying to update the password'
       });
