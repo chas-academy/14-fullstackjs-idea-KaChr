@@ -5,19 +5,13 @@ import thunk from 'redux-thunk';
 // Import reducer
 import rootReducer from './reducers';
 
-// Set initial state to empty obect
-const initState = {};
-
 const middleware = [thunk];
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const enhancer = composeEnhancers(applyMiddleware(...middleware));
+
 // Holds the state tree of the app
-const store = createStore(
-  rootReducer,
-  initState,
-  compose(
-    applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
+const store = createStore(rootReducer, enhancer);
 
 export default store;

@@ -3,9 +3,13 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const ObjectId = require('mongodb').ObjectId;
 
+// Form validation
+const updatePasswordInputValidation = require('../validation/password');
 const registerInputValidation = require('../validation/register');
 const loginInputValidation = require('../validation/login');
+// User model schema
 const User = require('../models/Users');
 
 // Create new user: /auth/register
@@ -77,7 +81,7 @@ router.post('/login', (req, res) => {
 
         // Return Success and a token
         return res.json({
-          succes: true,
+          success: true,
           token:
             'Bearer ' +
             jwt.sign(jwtPayload, process.env.SECRET, { expiresIn: 86400 }) // 24 hours before it expires
@@ -88,6 +92,59 @@ router.post('/login', (req, res) => {
       }
     });
   });
+});
+
+router.post('/update-password', (req, res) => {
+  // Checks that all values from req.body that goes thrugh this router are valid
+  const { error, isValid } = updatePasswordInputValidation(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(error);
+  }
+
+  // Check if user exists, if so update password
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      if (!user) {
+        error.email = 'A user with that email could not be found.';
+        return res.status(400).send(error);
+      } else {
+        // Check if the db password matches the enterd one
+        bcrypt.compare(req.body.password, user.password).then(isMatch => {
+          if (isMatch) {
+            // Hash the password
+            const bcryptNewPassword = bcrypt.hashSync(
+              req.body.password_new_1,
+              8
+            );
+
+            // Save new password
+            User.updateOne(
+              { _id: ObjectId(user._id) },
+              { $set: { password: bcryptNewPassword } }
+            )
+              .then(user => {
+                return res
+                  .status(200)
+                  .json({ message: 'The password has been updated' });
+              })
+              .catch(error => {
+                error.password =
+                  'Something went wrong when trying to update the user password';
+                return res.status(400).json(error);
+              });
+          } else {
+            error.password = 'The current password is incorrect';
+            return res.status(400).json(error);
+          }
+        });
+      }
+    })
+    .catch(error => {
+      return res.status(404).json({
+        message: 'There was a problem while trying to update the password'
+      });
+    });
 });
 
 // Show current user: /auth/me

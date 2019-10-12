@@ -1,5 +1,5 @@
 // import action type variabel
-import { SET_CURRENT_USER } from '../actions/types';
+import { SET_CURRENT_USER, UPDATE_PASSWORD } from '../actions/types';
 // To check if payload empty
 const isEmpty = require('lodash/isEmpty');
 
@@ -16,6 +16,11 @@ export default (state = initState, action) => {
       return {
         ...state,
         isAuth: !isEmpty(action.payload),
+        user: action.payload
+      };
+    case UPDATE_PASSWORD:
+      return {
+        ...state,
         user: action.payload
       };
     default:
