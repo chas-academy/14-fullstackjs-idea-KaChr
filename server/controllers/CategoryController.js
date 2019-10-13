@@ -71,4 +71,19 @@ router.get('/:id', (req, res) => {
   });
 });
 
+// delete category: /categories/:id
+router.delete('/:id', (req, res) => {
+  Category.findByIdAndDelete(req.params.id, (err, category) => {
+    if (err) {
+      return res
+        .status(500)
+        .send(
+          'There was an error while deleting the category from the database.'
+        );
+    } else {
+      return res.status(200).send('The category was successfully deleted.');
+    }
+  });
+});
+
 module.exports = router;
