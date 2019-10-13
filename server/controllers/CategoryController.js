@@ -41,4 +41,34 @@ router.post('/', (req, res) => {
     });
 });
 
+// read all categories: /categories
+router.get('/', (req, res) => {
+  Category.find({}, (err, categories) => {
+    if (err) {
+      return res
+        .status(500)
+        .send(
+          'There was an error while retreving the categories from the database.'
+        );
+    } else {
+      return res.status(200).send(categories);
+    }
+  });
+});
+
+// read one category: /categories/:id
+router.get('/:id', (req, res) => {
+  Category.findById(req.params.id, (err, category) => {
+    if (err) {
+      return res
+        .status(500)
+        .send(
+          'There was an error while retreving the category from the database.'
+        );
+    } else {
+      return res.status(200).send(category);
+    }
+  });
+});
+
 module.exports = router;
