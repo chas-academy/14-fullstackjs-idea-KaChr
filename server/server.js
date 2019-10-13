@@ -47,6 +47,8 @@ const auth = require('./controllers/AuthController');
 app.use('/auth', auth);
 const users = require('./controllers/UserController');
 app.use('/users', users);
+const categories = require('./controllers/CategoryController');
+app.use('/categories', categories);
 /*
 // Import index routes
 const index = require('./routes/index');
