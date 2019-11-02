@@ -38,7 +38,7 @@ export class Home extends Component {
 
 // Type-checking
 Home.propTypes = {
-  products: PropTypes.object.isRequired,
+  products: PropTypes.array.isRequired,
   getProducts: PropTypes.func.isRequired
 };
 
