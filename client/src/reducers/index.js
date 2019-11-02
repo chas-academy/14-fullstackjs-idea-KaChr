@@ -4,10 +4,12 @@ import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import userReducer from './userReducer';
+import productsReducer from './productsReducer';
 
 // Combine reducers
 export default combineReducers({
   auth: authReducer,
   error: errorReducer,
-  user: userReducer
+  user: userReducer,
+  products: productsReducer
 });
