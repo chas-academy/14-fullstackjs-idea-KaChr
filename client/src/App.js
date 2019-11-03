@@ -27,7 +27,8 @@ import {
   MyPage,
   UserDetail,
   UserEdit,
-  ChangePassword
+  ChangePassword,
+  Users
 } from './components';
 // Import CSS
 import './App.css';
@@ -61,6 +62,7 @@ export class App extends Component {
             <ToastContainer />
             <Switch>
               <PrivateRoute exact path='/' component={Home} />
+              <PrivateRoute exact path='/users' component={Users} />
               <PrivateRoute exact path='/my-page' component={MyPage} />
               <PrivateRoute exact path='/users/:id' component={UserDetail} />
               <PrivateRoute exact path='/users/edit/:id' component={UserEdit} />
