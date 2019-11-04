@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
-// Connecting redux to component
-import { connect } from 'react-redux';
 // Import type-checking
 import { PropTypes } from 'prop-types';
-// import actions from productActions
-import { getProducts } from '../../actions/productActions';
+// Connecting redux to component
+import { connect } from 'react-redux';
+// import actions from userActions
+import { getProductsByCategory } from '../../actions/productActions';
 // Import Product component
 import { Product } from '../../components';
 
-export class Home extends Component {
-  UNSAFE_componentWillMount() {
-    this.props.getProducts();
+export class CategoryProducts extends Component {
+  componentDidMount() {
+    if (this.props.match.params.category_url_slug) {
+      this.props.getProductsByCategory(
+        this.props.match.params.category_url_slug
+      );
+    }
   }
+
   render() {
     const { products } = this.props;
 
@@ -36,14 +41,15 @@ export class Home extends Component {
 }
 
 // Type-checking
-Home.propTypes = {
+CategoryProducts.propTypes = {
+  getProductsByCategory: PropTypes.func.isRequired,
   products: PropTypes.array.isRequired,
-  getProducts: PropTypes.func.isRequired
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      category_url_slug: PropTypes.node
+    }).isRequired
+  }).isRequired
 };
-
-const mapDispatchToProps = dispatch => ({
-  getProducts: () => dispatch(getProducts())
-});
 
 // Making props out of states to use in component
 const mapStateToProps = state => ({
@@ -53,5 +59,5 @@ const mapStateToProps = state => ({
 // Connects the variable with the action (connecting redux to the component)
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(Home);
+  { getProductsByCategory }
+)(CategoryProducts);

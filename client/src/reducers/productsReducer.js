@@ -1,5 +1,5 @@
 // import action type variabel
-import { GET_PRODUCTS_SUCCESS } from '../actions/types';
+import { GET_PRODUCTS_SUCCESS, GET_CATEGORY_PRODUCTS } from '../actions/types';
 
 // Set initial state to empty obect
 const initState = {
@@ -10,6 +10,11 @@ const initState = {
 export default (state = initState, action) => {
   switch (action.type) {
     case GET_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        products: action.payload
+      };
+    case GET_CATEGORY_PRODUCTS:
       return {
         ...state,
         products: action.payload

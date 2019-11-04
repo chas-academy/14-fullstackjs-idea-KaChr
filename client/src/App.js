@@ -28,7 +28,8 @@ import {
   UserDetail,
   UserEdit,
   ChangePassword,
-  Users
+  Users,
+  CategoryProducts
 } from './components';
 // Import CSS
 import './App.css';
@@ -70,6 +71,11 @@ export class App extends Component {
                 exact
                 path='/auth/update-password'
                 component={ChangePassword}
+              />
+              <PrivateRoute
+                exact
+                path='/category/:category_url_slug'
+                component={CategoryProducts}
               />
             </Switch>
             <Route exact path='/login' component={Login} />

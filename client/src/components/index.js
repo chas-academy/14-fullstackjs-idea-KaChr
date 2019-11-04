@@ -8,3 +8,6 @@ export { default as UserEdit } from './MyPage/User/UserEdit';
 export { default as ChangePassword } from './MyPage/User/ChangePassword';
 export { default as Users } from './Admin/Users';
 export { default as Product } from './Product/Product';
+export {
+  default as CategoryProducts
+} from './CategoryProducts/CategoryProducts';

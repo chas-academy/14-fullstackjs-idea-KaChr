@@ -42,13 +42,16 @@ router.get('/:id', (req, res) => {
   });
 });
 
-// get products by category: /products/category/:category_name (e.g. /products/category/perennials)
+// get products by category: /products/category/:category_url_slug (e.g. /products/category/perennials)
 router.get('/category/:category_url_slug', (req, res) => {
   Product.find()
     .populate('category')
     .exec((error, products) => {
       if (error) {
-        console.log(error);
+        return res.status(500).json({
+          message: 'Unsuccessful execution',
+          error: `${error}`
+        });
       }
       products = products.filter(
         product =>
