@@ -29,17 +29,19 @@ router.get('/', (req, res) => {
 
 // read one product: /products/:id
 router.get('/:id', (req, res) => {
-  Product.findById(req.params.id, (err, product) => {
-    if (err) {
-      return res
-        .status(500)
-        .send(
-          'There was an error while retreving the product from the database.'
-        );
-    } else {
-      return res.status(200).json(product);
-    }
-  });
+  Product.findById(req.params.id)
+    .populate('category')
+    .exec((err, product) => {
+      if (err) {
+        return res
+          .status(500)
+          .send(
+            'There was an error while retreving the product from the database.'
+          );
+      } else {
+        return res.status(200).json(product);
+      }
+    });
 });
 
 // get products by category: /products/category/:category_url_slug (e.g. /products/category/perennials)

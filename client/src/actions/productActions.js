@@ -4,9 +4,28 @@ import axios from 'axios';
 // import action type variabel
 import {
   GET_ERROR,
+  GET_PRODUCT,
   GET_PRODUCTS_SUCCESS,
   GET_CATEGORY_PRODUCTS
 } from './types';
+
+// Get products
+export const getProduct = id => dispatch => {
+  axios
+    .get(`http://localhost:8080/products/${id}`)
+    .then(res => {
+      dispatch({
+        type: GET_PRODUCT,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERROR,
+        payload: err
+      });
+    });
+};
 
 // Get products
 export const getProducts = () => dispatch => {
