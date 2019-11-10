@@ -20,7 +20,7 @@ export class ProductDetail extends Component {
 
     const img_url = product.img_url
       ? product.img_url
-      : `./mayana-plant__triton.jpg`;
+      : `/mayana-plant__triton.jpg`;
 
     const latin_name = product.latin_name ? product.latin_name : null;
 

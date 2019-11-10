@@ -78,7 +78,11 @@ export class App extends Component {
                 path='/category/:category_url_slug'
                 component={CategoryProducts}
               />
-              <PrivateRoute exact path='/:id' component={ProductDetail} />
+              <PrivateRoute
+                exact
+                path='/product/:id'
+                component={ProductDetail}
+              />
             </Switch>
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />

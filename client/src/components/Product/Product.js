@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom';
 function Product({ product }) {
   const img_url = product.img_url
     ? product.img_url
-    : `./mayana-plant__triton.jpg`;
+    : `/mayana-plant__triton.jpg`;
 
   const latin_name = product.latin_name ? product.latin_name : null;
 
   return (
     <li className={'product'}>
-      <Link to={`/${product._id}`}>
+      <Link to={`/product/${product._id}`}>
         <img src={img_url} />
       </Link>
       <article className={'product--info'}>
