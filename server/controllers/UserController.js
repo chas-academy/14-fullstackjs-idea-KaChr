@@ -57,6 +57,26 @@ router.put('/:id', (req, res) => {
   );
 });
 
+// update user role: /users/role/:id
+router.patch('/role/:id', (req, res) => {
+  const update = { admin: req.body.admin };
+
+  User.findOneAndUpdate(
+    { _id: req.params.id },
+    update,
+    { new: true },
+    (error, user) => {
+      if (error) {
+        error.update =
+          'There was an error while updating the users role in the database.';
+        return res.status(500).json(error);
+      } else {
+        return res.status(200).json(user.admin);
+      }
+    }
+  );
+});
+
 // delete user: /users/:id
 router.delete('/:id', (req, res) => {
   User.findByIdAndDelete(req.params.id, (error, user) => {

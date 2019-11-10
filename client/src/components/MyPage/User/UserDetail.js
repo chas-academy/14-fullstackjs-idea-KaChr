@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 // Import router
 import { withRouter } from 'react-router-dom';
 // import actions from userActions
-import { userDetail } from '../../../actions/userActions';
+import { userDetail, userEditRole } from '../../../actions/userActions';
 
 export class UserDetail extends Component {
   componentDidMount() {
@@ -14,6 +14,19 @@ export class UserDetail extends Component {
       this.props.userDetail(this.props.match.params.id);
     }
   }
+
+  handleInput = e => {
+    e.preventDefault();
+
+    const isAdmin = { admin: e.target.value };
+    this.setState(isAdmin);
+
+    this.props.userEditRole(
+      this.props.match.params.id,
+      isAdmin,
+      this.props.history
+    );
+  };
 
   render() {
     const { user } = this.props;
@@ -34,6 +47,7 @@ export class UserDetail extends Component {
                 <th>zipcode</th>
                 <th>phone</th>
                 <th>admin</th>
+                <th>Role</th>
               </tr>
             </thead>
             <tbody>
@@ -45,6 +59,41 @@ export class UserDetail extends Component {
                 <td>{user.zipcode}</td>
                 <td>{user.phone}</td>
                 <td>{user.admin.toString() || 'N/A'}</td>
+                <td>
+                  <div className='dropdown'>
+                    <button
+                      className='btn btn-secondary btn-sm dropdown-toggle'
+                      type='button'
+                      id='dropdownMenu2'
+                      data-toggle='dropdown'
+                      aria-haspopup='true'
+                      aria-expanded='false'
+                    >
+                      Change role
+                    </button>
+                    <div
+                      className='dropdown-menu'
+                      aria-labelledby='dropdownMenu2'
+                    >
+                      <button
+                        className='dropdown-item'
+                        type='button'
+                        onClick={this.handleInput.bind(this)}
+                        value='false'
+                      >
+                        User
+                      </button>
+                      <button
+                        className='dropdown-item'
+                        type='button'
+                        onClick={this.handleInput.bind(this)}
+                        value='true'
+                      >
+                        Admin
+                      </button>
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -54,21 +103,28 @@ export class UserDetail extends Component {
   }
 }
 
+// Type-checking
 UserDetail.propTypes = {
   userDetail: PropTypes.func.isRequired,
+  userEditRole: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.node
     }).isRequired
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
   }).isRequired
 };
 
+// Making props out of states to use in component
 const mapStateToProps = state => ({
   user: state.user.user
 });
 
+// Connects the variable with the action (connecting redux to the component)
 export default connect(
   mapStateToProps,
-  { userDetail }
+  { userDetail, userEditRole }
 )(withRouter(UserDetail));

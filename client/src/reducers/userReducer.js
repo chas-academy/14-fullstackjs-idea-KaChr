@@ -1,10 +1,11 @@
 // import action type variabel
-import { GET_USER, GET_USERS } from '../actions/types';
+import { GET_USER, GET_USERS, UPDATE_ROLE } from '../actions/types';
 
 // Set initial state to empty obect
 const initState = {
   user: {},
-  users: []
+  users: [],
+  admin: null
 };
 
 // Export state accordingly to how its manipulated with the help of action type, if no change return initState
@@ -19,6 +20,11 @@ export default (state = initState, action) => {
       return {
         ...state,
         users: action.payload
+      };
+    case UPDATE_ROLE:
+      return {
+        ...state,
+        admin: action.payload
       };
     default:
       return state;
