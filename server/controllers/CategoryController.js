@@ -6,8 +6,12 @@ const Category = require('../models/Categories');
 // Form validation
 const categoryInputValidation = require('../validation/category');
 
+// Middleware to check JWT token
+let tokenCheck = require('../middleware/tokenCheck');
+let requireAdmin = require('../middleware/requreAdmin');
+
 // create new category: /categories
-router.post('/', (req, res) => {
+router.post('/', tokenCheck, requireAdmin, (req, res) => {
   // checks that all values from req.body that goes thrugh this router are valid
   const { error, isValid } = categoryInputValidation(req.body);
 
@@ -45,7 +49,7 @@ router.post('/', (req, res) => {
 });
 
 // read all categories: /categories
-router.get('/', (req, res) => {
+router.get('/', tokenCheck, (req, res) => {
   Category.find({}, (err, categories) => {
     if (err) {
       return res
@@ -60,7 +64,7 @@ router.get('/', (req, res) => {
 });
 
 // read one category: /categories/:id
-router.get('/:id', (req, res) => {
+router.get('/:id', tokenCheck, (req, res) => {
   Category.findById(req.params.id, (err, category) => {
     if (err) {
       return res
@@ -75,7 +79,7 @@ router.get('/:id', (req, res) => {
 });
 
 // delete category: /categories/:id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', tokenCheck, requireAdmin, (req, res) => {
   Category.findByIdAndDelete(req.params.id, (err, category) => {
     if (err) {
       return res

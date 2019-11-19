@@ -10,8 +10,12 @@ const Category = require('../models/Categories');
 const productInputValidation = require('../validation/Product');
 const editProductInputValidation = require('../validation/edit-product');
 
+// Middleware to check JWT token
+let tokenCheck = require('../middleware/tokenCheck');
+let requireAdmin = require('../middleware/requreAdmin');
+
 // read all products: /products
-router.get('/', (req, res) => {
+router.get('/', tokenCheck, (req, res) => {
   Product.find({})
     .populate('category')
     .exec((err, products) => {
@@ -28,7 +32,7 @@ router.get('/', (req, res) => {
 });
 
 // read one product: /products/:id
-router.get('/:id', (req, res) => {
+router.get('/:id', tokenCheck, (req, res) => {
   Product.findById(req.params.id)
     .populate('category')
     .exec((err, product) => {
@@ -45,7 +49,7 @@ router.get('/:id', (req, res) => {
 });
 
 // get products by category: /products/category/:category_url_slug (e.g. /products/category/perennials)
-router.get('/category/:category_url_slug', (req, res) => {
+router.get('/category/:category_url_slug', tokenCheck, (req, res) => {
   Product.find()
     .populate('category')
     .exec((error, products) => {
@@ -72,7 +76,7 @@ router.get('/category/:category_url_slug', (req, res) => {
 });
 
 // create new product: /products
-router.post('/', (req, res) => {
+router.post('/', tokenCheck, requireAdmin, (req, res) => {
   // checks that all values from req.body that goes thrugh this router are valid
   const { error, isValid } = productInputValidation(req.body);
 
@@ -115,7 +119,7 @@ router.post('/', (req, res) => {
 });
 
 // update product: /products/:id
-router.put('/:id', (req, res) => {
+router.put('/:id', tokenCheck, requireAdmin, (req, res) => {
   // checks that all values from req.body that goes through this router are valid
   const { error, isValid } = editProductInputValidation(req.body);
   if (!isValid) {
@@ -136,7 +140,7 @@ router.put('/:id', (req, res) => {
 });
 
 // delete product: /products/:id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', tokenCheck, requireAdmin, (req, res) => {
   Product.findByIdAndDelete(req.params.id, (error, product) => {
     if (error) {
       return res.status(500).json({

@@ -12,6 +12,9 @@ const loginInputValidation = require('../validation/login');
 // User model schema
 const User = require('../models/Users');
 
+// Middleware to check JWT token
+let tokenCheck = require('../middleware/tokenCheck');
+
 // Create new user: /auth/register
 router.post('/register', (req, res) => {
   // checks that all values from req.body that goes thrugh this router are valid
@@ -77,14 +80,12 @@ router.post('/login', (req, res) => {
     bcrypt.compare(req.body.password, user.password).then(isMatch => {
       if (isMatch) {
         // Create a payload for JWT
-        const jwtPayload = { id: user._id, admin: user.admin };
+        const jwtPayload = { id: user._id };
 
         // Return Success and a token
         return res.json({
           success: true,
-          token:
-            'Bearer ' +
-            jwt.sign(jwtPayload, process.env.SECRET, { expiresIn: 86400 }) // 24 hours before it expires
+          token: jwt.sign(jwtPayload, process.env.SECRET, { expiresIn: 86400 }) // 24 hours before it expires
         });
       } else {
         error.password = 'Invalid password.';
@@ -94,7 +95,7 @@ router.post('/login', (req, res) => {
   });
 });
 
-router.post('/update-password', (req, res) => {
+router.post('/update-password', tokenCheck, (req, res) => {
   // Checks that all values from req.body that goes thrugh this router are valid
   const { error, isValid } = updatePasswordInputValidation(req.body);
 
