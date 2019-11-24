@@ -27,7 +27,10 @@ import {
   MyPage,
   UserDetail,
   UserEdit,
-  ChangePassword
+  ChangePassword,
+  Users,
+  CategoryProducts,
+  ProductDetail
 } from './components';
 // Import CSS
 import './App.css';
@@ -61,6 +64,7 @@ export class App extends Component {
             <ToastContainer />
             <Switch>
               <PrivateRoute exact path='/' component={Home} />
+              <PrivateRoute exact path='/users' component={Users} />
               <PrivateRoute exact path='/my-page' component={MyPage} />
               <PrivateRoute exact path='/users/:id' component={UserDetail} />
               <PrivateRoute exact path='/users/edit/:id' component={UserEdit} />
@@ -68,6 +72,16 @@ export class App extends Component {
                 exact
                 path='/auth/update-password'
                 component={ChangePassword}
+              />
+              <PrivateRoute
+                exact
+                path='/category/:category_url_slug'
+                component={CategoryProducts}
+              />
+              <PrivateRoute
+                exact
+                path='/product/:id'
+                component={ProductDetail}
               />
             </Switch>
             <Route exact path='/login' component={Login} />

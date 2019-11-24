@@ -7,14 +7,20 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 
 // Check if logged in, then display component else redirect to login
-const PrivateRoute = ({ component: Component, auth, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      auth.isAuth === true ? <Component {...props} /> : <Redirect to='/login' />
-    }
-  />
-);
+const PrivateRoute = ({ component: Component, auth, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        auth.isAuth === true ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to='/login' />
+        )
+      }
+    />
+  );
+};
 
 // Type-checking
 PrivateRoute.propTypes = {

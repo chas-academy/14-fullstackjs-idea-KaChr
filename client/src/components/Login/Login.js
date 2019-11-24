@@ -21,6 +21,8 @@ export class Login extends Component {
   componentDidMount() {
     if (this.props.auth.isAuth) {
       this.props.history.push('/');
+    } else {
+      return;
     }
   }
 

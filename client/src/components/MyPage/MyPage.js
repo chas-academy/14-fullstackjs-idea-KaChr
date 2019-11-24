@@ -19,8 +19,8 @@ export class MyPage extends Component {
             <nav className='col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar'>
               <ul className='nav nav-pills flex-column'>
                 <li className='nav-item'>
-                  <Link className='nav-link' to='/#'>
-                    Dashboard
+                  <Link className='nav-link' to={`/users`}>
+                    Users
                   </Link>
                 </li>
                 <li className='nav-item'>
@@ -54,6 +54,7 @@ export class MyPage extends Component {
   }
 }
 
+// Type-checking
 MyPage.propTypes = {
   userDetail: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,

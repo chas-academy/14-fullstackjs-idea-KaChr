@@ -1,30 +1,33 @@
 // import action type variabel
-import { GET_USER, GET_USERS, UPDATE_ROLE } from '../actions/types';
+import {
+  GET_PRODUCTS_SUCCESS,
+  GET_CATEGORY_PRODUCTS,
+  GET_PRODUCT
+} from '../actions/types';
 
 // Set initial state to empty obect
 const initState = {
-  user: {},
-  users: [],
-  admin: null
+  products: [],
+  product: {}
 };
 
 // Export state accordingly to how its manipulated with the help of action type, if no change return initState
 export default (state = initState, action) => {
   switch (action.type) {
-    case GET_USER:
+    case GET_PRODUCTS_SUCCESS:
       return {
         ...state,
-        user: action.payload
+        products: action.payload
       };
-    case GET_USERS:
+    case GET_CATEGORY_PRODUCTS:
       return {
         ...state,
-        users: action.payload
+        products: action.payload
       };
-    case UPDATE_ROLE:
+    case GET_PRODUCT:
       return {
         ...state,
-        admin: action.payload
+        product: action.payload
       };
     default:
       return state;

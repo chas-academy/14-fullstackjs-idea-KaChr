@@ -26,7 +26,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
     'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    'Origin, X-Requested-With, Content-Type, application/json, Accept, Authorization'
   );
   res.header('Access-Control-Allow-Headers', 'x-access-token');
   res.header('Access-Control-Allow-Methods', 'POST, PUT, GET, OPTIONS, DELETE');
@@ -49,14 +49,11 @@ const users = require('./controllers/UserController');
 app.use('/users', users);
 const categories = require('./controllers/CategoryController');
 app.use('/categories', categories);
-/*
-// Import index routes
-const index = require('./routes/index');
-app.use('/', index);
-app.use('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
-});
-*/
+const products = require('./controllers/ProductController');
+app.use('/products', products);
+const admin = require('./controllers/AdminController');
+app.use('/admin', admin);
+
 // Import port from .env
 const port = process.env.PORT || 8888;
 
