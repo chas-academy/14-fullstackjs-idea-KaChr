@@ -37,7 +37,7 @@ router.post('/register', (req, res) => {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
-        password: bcryptPassword,
+        encryptedPassword: bcryptPassword,
         adress: req.body.adress,
         zipcode: req.body.zipcode,
         phone: req.body.phone
@@ -77,7 +77,7 @@ router.post('/login', (req, res) => {
     }
 
     // Make sure the passwords are the same
-    bcrypt.compare(req.body.password, user.password).then(isMatch => {
+    bcrypt.compare(req.body.password, user.encryptedPassword).then(isMatch => {
       if (isMatch) {
         // Create a payload for JWT
         const jwtPayload = { id: user._id };
@@ -111,34 +111,36 @@ router.post('/update-password', tokenCheck, (req, res) => {
         return res.status(400).send(error);
       } else {
         // Check if the db password matches the enterd one
-        bcrypt.compare(req.body.password, user.password).then(isMatch => {
-          if (isMatch) {
-            // Hash the password
-            const bcryptNewPassword = bcrypt.hashSync(
-              req.body.password_new_1,
-              8
-            );
+        bcrypt
+          .compare(req.body.password, user.encryptedPassword)
+          .then(isMatch => {
+            if (isMatch) {
+              // Hash the password
+              const bcryptNewPassword = bcrypt.hashSync(
+                req.body.password_new_1,
+                8
+              );
 
-            // Save new password
-            User.updateOne(
-              { _id: ObjectId(user._id) },
-              { $set: { password: bcryptNewPassword } }
-            )
-              .then(user => {
-                return res
-                  .status(200)
-                  .json({ message: 'The password has been updated' });
-              })
-              .catch(error => {
-                error.password =
-                  'Something went wrong when trying to update the user password';
-                return res.status(400).json(error);
-              });
-          } else {
-            error.password = 'The current password is incorrect';
-            return res.status(400).json(error);
-          }
-        });
+              // Save new password
+              User.updateOne(
+                { _id: ObjectId(user._id) },
+                { $set: { encryptedPassword: bcryptNewPassword } }
+              )
+                .then(user => {
+                  return res
+                    .status(200)
+                    .json({ message: 'The password has been updated' });
+                })
+                .catch(error => {
+                  error.password =
+                    'Something went wrong when trying to update the user password';
+                  return res.status(400).json(error);
+                });
+            } else {
+              error.password = 'The current password is incorrect';
+              return res.status(400).json(error);
+            }
+          });
       }
     })
     .catch(error => {

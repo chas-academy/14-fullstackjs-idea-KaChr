@@ -27,8 +27,7 @@ router.post('/', tokenCheck, requireAdmin, (req, res) => {
         return res.status(400).json(error);
       } else {
         const newCategory = {
-          category_name: req.body.category_name,
-          category_url_slug: slugify(req.body.category_name)
+          category_name: req.body.category_name
         };
 
         Category.create(newCategory, (err, category) => {
@@ -92,24 +91,5 @@ router.delete('/:id', tokenCheck, requireAdmin, (req, res) => {
     }
   });
 });
-
-function slugify(string) {
-  const a =
-    'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
-  const b =
-    'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnooooooooprrsssssttuuuuuuuuuwxyyzzz------';
-  const p = new RegExp(a.split('').join('|'), 'g');
-
-  return string
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w\-]+/g, '') // Remove all non-word characters
-    .replace(/\-\-+/g, '-') // Replace multiple - with single -
-    .replace(/^-+/, '') // Trim - from start of text
-    .replace(/-+$/, ''); // Trim - from end of text
-}
 
 module.exports = router;

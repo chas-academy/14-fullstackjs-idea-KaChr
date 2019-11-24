@@ -51,14 +51,9 @@ const categories = require('./controllers/CategoryController');
 app.use('/categories', categories);
 const products = require('./controllers/ProductController');
 app.use('/products', products);
-/*
-// Import index routes
-const index = require('./routes/index');
-app.use('/', index);
-app.use('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
-});
-*/
+const admin = require('./controllers/AdminController');
+app.use('/admin', admin);
+
 // Import port from .env
 const port = process.env.PORT || 8888;
 
