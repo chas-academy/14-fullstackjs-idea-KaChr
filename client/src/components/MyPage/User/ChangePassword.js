@@ -58,7 +58,7 @@ class ChangePassword extends Component {
     return (
       <div>
         <div id='change-password'>
-          <h2>Change password:</h2>
+          <h2>Change password</h2>
           <form id='register--form' onSubmit={e => this.onSubmit(e)}>
             <div className='form-group' id='register--form--content'>
               <label htmlFor='email'>Email adress</label>

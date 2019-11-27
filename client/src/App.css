@@ -7,12 +7,22 @@
   padding: 2em;
 }
 
+body {
+  padding-top: 3.5rem;
+}
+
+a {
+  color: rgb(0, 0, 0);
+}
+
 ul {
   list-style-type: none;
+  padding: 0;
 }
 
 .product {
   display: flex;
+  flex-direction: column;
   background: #efef;
   padding: 2em;
   margin: 0.5em;
@@ -22,11 +32,19 @@ ul {
 .product a {
   display: inline-flex;
   max-width: 50%;
+  text-decoration: underline;
 }
 
 .product img {
-  max-width: 50%;
-  padding-right: 1.5em;
+  max-width: 200%;
+}
+
+.product h6 {
+  color: rgb(117, 113, 113);
+}
+
+.product p {
+  margin-bottom: 0;
 }
 
 #register {
@@ -47,10 +65,30 @@ ul {
   padding-top: 1rem;
 }
 
+#link--register {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.nav-link {
+  text-align: right;
+}
+
 /* For desktop: */
 @media only screen and (min-width: 768px) {
   .App {
     background-color: rgba(85, 107, 47, 0.9);
+  }
+
+  .product {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .product img {
+    max-width: 50%;
+    padding-right: 1.5em;
   }
 
   #register--form {

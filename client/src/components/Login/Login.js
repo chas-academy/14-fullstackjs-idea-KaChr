@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 // To add addtitonal classnames
 import classnames from 'classnames';
+// Import link
+import { Link } from 'react-router-dom';
 // Import type-checking
 import { PropTypes } from 'prop-types';
 // Connecting redux to component
@@ -55,7 +57,7 @@ export class Login extends Component {
 
     return (
       <div id='login'>
-        <h2>Login:</h2>
+        <h2>Login</h2>
         <form id='register--form' noValidate onSubmit={this.onSubmit}>
           <div className='form-group' id='register--form--content'>
             <label htmlFor='email'>Email address</label>
@@ -95,6 +97,9 @@ export class Login extends Component {
             </button>
           </div>
         </form>
+        <Link className='link--register' to='/register'>
+          Not a user yet? Go to register
+        </Link>
       </div>
     );
   }

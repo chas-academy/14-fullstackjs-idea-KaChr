@@ -14,18 +14,20 @@ function Product({ product }) {
   return (
     <li className={'product'}>
       <Link to={`/product/${product._id}`}>
-        <img src={img_url} />
+        <img src={img_url} alt='Plant' />
       </Link>
       <article className={'product--info'}>
         <header>
-          <h3>{product.name}</h3>
-          <h5>{latin_name}</h5>
-          <span>${product.price}</span>
+          <h2>{product.name}</h2>
+          <h6>{latin_name}</h6>
+          <span>Price: ${product.price}</span>
+          <br />
+          Category:
+          <br />
           <Link to={`/category/${product.category.category_url_slug}`}>
             <span>{product.category.category_name}</span>
           </Link>
         </header>
-        <p>{product.description}</p>
       </article>
     </li>
   );

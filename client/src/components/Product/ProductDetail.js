@@ -29,17 +29,22 @@ export class ProductDetail extends Component {
     } else {
       return (
         <div className={'product'}>
-          <img src={img_url} />
+          <img src={img_url} alt='Plant' />
           <article className={'product--info'}>
             <header>
               <h3>{product.name}</h3>
-              <h5>{latin_name}</h5>
-              <span>${product.price}</span>
+              <h6>{latin_name}</h6>
+              <span>Price: ${product.price}</span>
+              <br />
+              Category:
+              <br />
               <Link to={`/category/${product.category.category_url_slug}`}>
                 <span>{product.category.category_name}</span>
               </Link>
+              <hr />
+              <p>Product description:</p>
+              <p>{product.description}</p>
             </header>
-            <p>{product.description}</p>
           </article>
         </div>
       );

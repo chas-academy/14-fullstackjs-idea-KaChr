@@ -8,11 +8,15 @@ import { GET_ERROR, SET_CURRENT_USER, UPDATE_PASSWORD } from './types';
 import authToken from '../utils/authToken';
 // React dependency for notifications
 import { toast } from 'react-toastify';
+// Import REACT_APP_API_URL from .env
+const dotenv = require('dotenv');
+dotenv.config();
+const API_URL = process.env.REACT_APP_API_URL;
 
 // Register fetch (from backend)
 export const userRegister = (dataUser, history) => dispatch => {
   axios
-    .post(`http://localhost:8080/auth/register`, dataUser)
+    .post(`${API_URL}/auth/register`, dataUser)
     // eslint-disable-next-line no-unused-vars
     .then(res => history.push('/login'))
     .catch(err =>
@@ -26,7 +30,7 @@ export const userRegister = (dataUser, history) => dispatch => {
 // Login (with token)
 export const userLogin = dataUser => dispatch => {
   axios
-    .post(`http://localhost:8080/auth/login`, dataUser)
+    .post(`${API_URL}/auth/login`, dataUser)
     .then(res => {
       // Save token to lockal storage
       const { token } = res.data;
@@ -58,10 +62,7 @@ export const currentUser = jwtDecoded => {
 // Change user password
 export const updatePassword = (userData, history) => async dispatch => {
   try {
-    const res = await axios.post(
-      `http://localhost:8080/auth/update-password`,
-      userData
-    );
+    const res = await axios.post(`${API_URL}/auth/update-password`, userData);
 
     dispatch({
       type: UPDATE_PASSWORD,
