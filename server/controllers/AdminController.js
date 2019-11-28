@@ -1,7 +1,7 @@
 const AdminBro = require('admin-bro');
-const AdminBroExpress = require('admin-bro-expressjs');
 const AdminBroMongoose = require('admin-bro-mongoose');
 const bcrypt = require('bcrypt');
+const AdminBroExpressjs = require('admin-bro-expressjs');
 
 AdminBro.registerAdapter(AdminBroMongoose);
 
@@ -66,6 +66,19 @@ const adminBro = new AdminBro({
   }
 });
 
-const router = AdminBroExpress.buildRouter(adminBro);
+// Build and use a router which will handle all AdminBro routes
+const router = AdminBroExpressjs.buildAuthenticatedRouter(adminBro, {
+  cookiePassword: process.env.SECRET,
+  authenticate: async (email, password) => {
+    const user = await User.findOne({ email });
+    if (user) {
+      const matched = await bcrypt.compare(password, user.encryptedPassword);
+      if (matched) {
+        return user;
+      }
+    }
+    return false;
+  }
+});
 
 module.exports = router;
