@@ -12,7 +12,7 @@ function Product({ product }) {
   const latin_name = product.latin_name ? product.latin_name : null;
 
   return (
-    <li className={'product'}>
+    <li className={'product--list'}>
       <Link to={`/product/${product._id}`}>
         <img src={img_url} alt='Plant' />
       </Link>
