@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 // Import link
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 // Import type-checking
 import { PropTypes } from 'prop-types';
 // Connecting redux to component
 import { connect } from 'react-redux';
 // import actions from authActions
 import { userLogout } from '../../actions/authActions';
+// import actions from userActions
+import { userDetail } from '../../actions/userActions';
 
 class Header extends Component {
   onLogout = e => {
@@ -15,38 +17,68 @@ class Header extends Component {
   };
 
   render() {
-    const { isAuth } = this.props.auth;
+    const { isAuth, user } = this.props.auth;
 
     // Links that show when logged in
     const linkAuth = (
       <div>
-        <Link className='navbar-brand' to='/my-page'>
-          My page
-        </Link>
-        <Link className='navbar-brand' to='/#' onClick={this.onLogout}>
-          Logout
-        </Link>
+        <li className='nav-item'>
+          <Link className='nav-link' to={`/user/${user.id}`}>
+            My information
+          </Link>
+        </li>
+        <li className='nav-item'>
+          <Link className='nav-link' to={`/user/edit/${user.id}`}>
+            Change information
+          </Link>
+        </li>
+        <li className='nav-item'>
+          <Link className='nav-link' to={`/user/update-password/${user.id}`}>
+            Change password
+          </Link>
+        </li>
+        <li className='nav-item'>
+          <Link className='nav-link' to='/#' onClick={this.onLogout}>
+            Logout
+          </Link>
+        </li>
       </div>
     );
 
     // Links that show when logged out
     const linkGuest = (
       <div>
-        <Link className='nav-link' to='/register'>
-          Sign Up
-        </Link>
-        <Link className='nav-link' to='/login'>
-          Login
-        </Link>
+        <li className='nav-item'>
+          <Link className='nav-link' to='/register'>
+            Register
+          </Link>
+        </li>
+        <li className='nav-item'>
+          <Link className='nav-link' to='/login'>
+            Login
+          </Link>
+        </li>
       </div>
     );
 
     return (
       <div>
-        <Link className='navbar-brand' to='/'>
-          The Garden
-        </Link>
-        {isAuth ? linkAuth : linkGuest}
+        <nav className='navbar navbar-dark bg-dark fixed-top'>
+          <Link className='navbar-brand' to='/'>
+            The Garden
+          </Link>
+          <button
+            className='navbar-toggler'
+            type='button'
+            data-toggle='collapse'
+            data-target='#collapsingNavbar'
+          >
+            <span className='navbar-toggler-icon'></span>
+          </button>
+          <div className='navbar-collapse collapse' id='collapsingNavbar'>
+            <ul className='navbar-nav'>{isAuth ? linkAuth : linkGuest}</ul>
+          </div>
+        </nav>
       </div>
     );
   }
@@ -54,6 +86,7 @@ class Header extends Component {
 
 // Type-checking
 Header.propTypes = {
+  userDetail: PropTypes.func.isRequired,
   userLogout: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -66,5 +99,5 @@ const mapStateToProps = state => ({
 // Connects the variable with the action (connecting redux to the component)
 export default connect(
   mapStateToProps,
-  { userLogout }
-)(Header);
+  { userDetail, userLogout }
+)(withRouter(Header));

@@ -9,10 +9,15 @@ import {
   GET_CATEGORY_PRODUCTS
 } from './types';
 
-// Get products
+// Import REACT_APP_API_URL from .env
+const dotenv = require('dotenv');
+dotenv.config();
+const API_URL = process.env.REACT_APP_API_URL;
+
+// Get product
 export const getProduct = id => dispatch => {
   axios
-    .get(`http://localhost:8080/products/${id}`)
+    .get(`${API_URL}/products/${id}`)
     .then(res => {
       dispatch({
         type: GET_PRODUCT,
@@ -30,7 +35,7 @@ export const getProduct = id => dispatch => {
 // Get products
 export const getProducts = () => dispatch => {
   axios
-    .get(`http://localhost:8080/products`)
+    .get(`${API_URL}/products`)
     .then(res => {
       dispatch({
         type: GET_PRODUCTS_SUCCESS,
@@ -48,7 +53,7 @@ export const getProducts = () => dispatch => {
 // Get products by category
 export const getProductsByCategory = category_url_slug => dispatch => {
   axios
-    .get(`http://localhost:8080/products/category/${category_url_slug}`)
+    .get(`${API_URL}/products/category/${category_url_slug}`)
     .then(res => {
       dispatch({
         type: GET_CATEGORY_PRODUCTS,

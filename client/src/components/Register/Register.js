@@ -62,7 +62,7 @@ export class Register extends Component {
 
     return (
       <div id='register'>
-        <h2>Register:</h2>
+        <h2>Register</h2>
         <form id='register--form' noValidate onSubmit={this.onSubmit}>
           <div className='form-group' id='register--form--content'>
             <label htmlFor='first_name'>First name</label>

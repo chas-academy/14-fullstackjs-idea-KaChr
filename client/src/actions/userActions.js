@@ -4,11 +4,15 @@ import axios from 'axios';
 import { GET_USER, GET_USERS, UPDATE_ROLE, GET_ERROR } from './types';
 // React dependency for notifications
 import { toast } from 'react-toastify';
+// Import REACT_APP_API_URL from .env
+const dotenv = require('dotenv');
+dotenv.config();
+const API_URL = process.env.REACT_APP_API_URL;
 
 // Get user details
 export const userDetail = id => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:8080/users/${id}`);
+    const res = await axios.get(`${API_URL}/users/${id}`);
 
     dispatch({
       type: GET_USER,
@@ -25,7 +29,7 @@ export const userDetail = id => async dispatch => {
 // Get users details
 export const usersDetail = () => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:8080/users`);
+    const res = await axios.get(`${API_URL}/users`);
 
     dispatch({
       type: GET_USERS,
@@ -42,7 +46,7 @@ export const usersDetail = () => async dispatch => {
 // Edit user details
 export const userEdit = (id, dataUser, history) => dispatch => {
   axios
-    .put(`http://localhost:8080/users/${id}`, dataUser)
+    .put(`${API_URL}/users/${id}`, dataUser)
     .then(() => history.push('/'))
     .catch(err => {
       dispatch({
@@ -55,10 +59,7 @@ export const userEdit = (id, dataUser, history) => dispatch => {
 // Change user password
 export const userEditRole = (id, dataUser, history) => async dispatch => {
   try {
-    const res = await axios.patch(
-      `http://localhost:8080/users/role/${id}`,
-      dataUser
-    );
+    const res = await axios.patch(`${API_URL}/users/role/${id}`, dataUser);
 
     dispatch({
       type: UPDATE_ROLE,
@@ -82,7 +83,7 @@ export const userEditRole = (id, dataUser, history) => async dispatch => {
 // Get current profile
 export const getCurrentProfile = id => dispatch => {
   axios
-    .get(`http://localhost:8080/users/${id}`)
+    .get(`${API_URL}/users/${id}`)
     .then(res =>
       dispatch({
         type: GET_USER,

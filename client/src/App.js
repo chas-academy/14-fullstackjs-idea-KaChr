@@ -24,11 +24,9 @@ import {
   Home,
   Register,
   Login,
-  MyPage,
   UserDetail,
   UserEdit,
   ChangePassword,
-  Users,
   CategoryProducts,
   ProductDetail
 } from './components';
@@ -64,13 +62,11 @@ export class App extends Component {
             <ToastContainer />
             <Switch>
               <PrivateRoute exact path='/' component={Home} />
-              <PrivateRoute exact path='/users' component={Users} />
-              <PrivateRoute exact path='/my-page' component={MyPage} />
-              <PrivateRoute exact path='/users/:id' component={UserDetail} />
-              <PrivateRoute exact path='/users/edit/:id' component={UserEdit} />
+              <PrivateRoute exact path='/user/:id' component={UserDetail} />
+              <PrivateRoute exact path='/user/edit/:id' component={UserEdit} />
               <PrivateRoute
                 exact
-                path='/auth/update-password'
+                path='/user/update-password/:id'
                 component={ChangePassword}
               />
               <PrivateRoute

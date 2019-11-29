@@ -79,7 +79,7 @@ export class UserEdit extends Component {
     return (
       <div>
         <div id='edit-user'>
-          <h2>Edit user:</h2>
+          <h2>Change information</h2>
           <form id='register--form' onSubmit={e => this.onSubmit(e)}>
             <div className='form-group' id='register--form--content'>
               <label htmlFor='first_name'>First name</label>
