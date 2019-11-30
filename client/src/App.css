@@ -1,12 +1,144 @@
+/* For mobile phones: */
 .App {
+  width: 100%;
+  min-height: 100vh;
   text-align: center;
+  background-color: rgba(85, 107, 47, 0.3);
+  padding: 2em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+body {
+  padding-top: 3.5rem;
+}
+
+a {
+  color: rgb(0, 0, 0);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.product--list {
+  background: #efef;
+  padding: 2em;
+  margin: 0.5em;
+  border-radius: 5px;
+  align-items: center;
+}
+
+.product--list a {
+  display: inline-flex;
+  max-width: 100%;
+  text-decoration: underline;
+}
+
+.product--list img {
+  width: 100%;
+  height: 100%;
+}
+
+.product {
+  flex-direction: column;
+  background: #efef;
+  padding: 2em;
+  margin: 0.5em;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product a {
+  display: inline-flex;
+  max-width: 100%;
+  text-decoration: underline;
+}
+
+.product img {
+  width: 100%;
+  height: 100%;
+}
+
+.product h6 {
+  color: rgb(117, 113, 113);
+}
+
+.product p {
+  margin-bottom: 0;
+}
+
+#register {
+  margin-top: 2rem;
+}
+
+#register--form {
+  font-weight: bold;
+  text-align: left;
+}
+
+#register--form--content {
+  margin: 20px;
+}
+
+#register--form--content--button {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+#link--register {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.nav-link {
+  text-align: right;
+}
+
+/* For desktop: */
+@media only screen and (min-width: 768px) {
+  .App {
+    background-color: rgba(85, 107, 47, 0.9);
   }
-  to {
-    transform: rotate(360deg);
+
+  .product--list {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    justify-content: left;
+  }
+
+  .product--list a {
+    max-width: 50%;
+  }
+
+  .product--list img {
+    max-width: 100%;
+    padding-right: 1.5em;
+  }
+
+  .product {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    justify-content: left;
+  }
+
+  .product a {
+    max-width: 50%;
+  }
+
+  .product img {
+    max-width: 50%;
+    padding-right: 1.5em;
+  }
+
+  #register--form {
+    background-color: rgba(245, 249, 250, 0.7);
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    border-radius: 1rem;
+    width: 700px;
+    margin: 0 auto;
+    padding: 20px;
   }
 }
