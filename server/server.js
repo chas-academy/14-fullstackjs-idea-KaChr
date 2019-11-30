@@ -3,11 +3,12 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').load();
+const path = require('path');
 
 const bodyParser = require('body-parser');
 
 // Import MongoDB url from .env
-const mongoDB = process.env.MONGO_URL;
+const mongoDB = process.env.MONGO_URI;
 
 // Connect to MongoDB
 mongoose
@@ -53,6 +54,16 @@ const products = require('./controllers/ProductController');
 app.use('/products', products);
 const admin = require('./controllers/AdminController');
 app.use('/admin', admin);
+
+// Server static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 // Import port from .env
 const port = process.env.PORT || 8888;
