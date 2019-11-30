@@ -13,7 +13,7 @@
     "heroku-postbuild": "YARN_PRODUCTION=true yarn install --prefix client && yarn run build --prefix client"
   },
   "keywords": [],
-  "author": "",
+  "author": "Karin Christensen <karin.christensen@chasacademy.se>",
   "license": "ISC",
   "dependencies": {
     "admin-bro": "^1.4.0",
@@ -37,5 +37,6 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
-  }
+  },
+  "repository": "git@github.com:chas-academy/14-fullstackjs-idea-KaChr.git"
 }
