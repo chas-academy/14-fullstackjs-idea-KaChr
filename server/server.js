@@ -7,7 +7,7 @@ require('dotenv').load();
 const bodyParser = require('body-parser');
 
 // Import MongoDB url from .env
-const mongoDB = process.env.MONGO_URL;
+const mongoDB = process.env.MONGODB_URI;
 
 // Connect to MongoDB
 mongoose
@@ -35,6 +35,8 @@ app.use((req, res, next) => {
 
 app.use(cors());
 
+const port = process.env.PORT || 8888;
+
 const passport = require('passport');
 // Passport middleware
 app.use(passport.initialize());
@@ -54,8 +56,15 @@ app.use('/products', products);
 const admin = require('./controllers/AdminController');
 app.use('/admin', admin);
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
 // Import port from .env
-const port = process.env.PORT || 8888;
 
 // What port the server should listen on
 app.listen(port, () => {
