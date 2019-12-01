@@ -7,7 +7,7 @@ require('dotenv').load();
 const bodyParser = require('body-parser');
 
 // Import MongoDB url from .env
-const mongoDB = process.env.MONGO_URI;
+const mongoDB = process.env.MONGO_URL;
 
 // Connect to MongoDB
 mongoose
@@ -53,16 +53,6 @@ const products = require('./controllers/ProductController');
 app.use('/products', products);
 const admin = require('./controllers/AdminController');
 app.use('/admin', admin);
-
-// Server static assets if in production
-if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  app.use(express.static('client/build'));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
 
 // Import port from .env
 const port = process.env.PORT || 8888;
