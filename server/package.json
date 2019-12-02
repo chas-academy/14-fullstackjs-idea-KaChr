@@ -1,13 +1,12 @@
 {
-  "name": "the-garden",
+  "name": "the-garden-backend",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "server": "nodemon -w server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "cd client && yarn install && yarn run build"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
