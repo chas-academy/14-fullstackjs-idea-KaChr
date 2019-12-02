@@ -20,8 +20,6 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(express.static(path.resolve('../client/build')));
-
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
@@ -55,6 +53,15 @@ const products = require('./controllers/ProductController');
 app.use('/products', products);
 const admin = require('./controllers/AdminController');
 app.use('/admin', admin);
+
+// app.use(express.static(path.resolve('../client/build')));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });
+}
 
 // What port the server should listen on
 app.listen(port, () => {

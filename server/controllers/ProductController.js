@@ -7,7 +7,7 @@ const Product = require('../models/Products');
 const Category = require('../models/Categories');
 
 // Form validation
-const productInputValidation = require('../validation/Product');
+const productInputValidation = require('../validation/product');
 const editProductInputValidation = require('../validation/edit-product');
 
 // Middleware to check JWT token
